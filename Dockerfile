@@ -84,7 +84,7 @@ COPY config/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Configure PHP-FPM
 # https://github.com/TrafeX/docker-php-nginx/blob/6a3b2f4abcd35da533ec191d8cb09eaa31159a85/config/fpm-pool.conf
-COPY config/fpm-pool.conf /usr/local/etc/php-fpm.d/php-fpm.d/www.conf
+COPY config/fpm-pool.conf /usr/local/etc/php-fpm.d/zzz_custom.conf
 COPY config/php.ini /usr/local/etc/php/conf.d/custom.ini
 
 # Configure supervisord
