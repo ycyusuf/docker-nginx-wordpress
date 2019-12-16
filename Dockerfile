@@ -97,7 +97,6 @@ RUN curl -L https://github.com/roots/bedrock/archive/0f8b177d86848d85174c22fae40
 # Expose the nginx port
 EXPOSE 80
 
-# Entrypoint does FOO_FILE secret to env conversion
-COPY ./scripts/* /usr/local/bin/
-ENTRYPOINT ["docker_entrypoint.sh"]
+COPY ./scripts/. /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

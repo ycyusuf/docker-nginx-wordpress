@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DIR=/usr/local/bin/docker-entrypoint.d
+
+if [[ -d "$DIR" ]]
+then
+  for file in "$DIR/"*; do
+    if [ -f "$file" ] && [ -x "$file" ] 
+    then
+      . "$file"
+    fi
+  done
+fi
+
+exec "$@"
