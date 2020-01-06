@@ -94,6 +94,8 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN curl -L https://github.com/roots/bedrock/archive/0f8b177d86848d85174c22fae40e69e008946713.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
 
+RUN chown -R www-data.www-data /var/www/html/web/app/uploads/
+
 # Expose the nginx port
 EXPOSE 80
 
