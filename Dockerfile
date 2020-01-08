@@ -37,7 +37,8 @@ RUN set -ex; \
   ; \
   pecl install imagick-3.4.4; \
   pecl install ds-1.2.9; \
-  docker-php-ext-enable ds imagick; \
+  pecl install apfd-1.0.1; \
+  docker-php-ext-enable apfd ds imagick; \
   \
   runDeps="$( \
     scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
@@ -91,7 +92,7 @@ COPY config/php.ini /usr/local/etc/php/conf.d/custom.ini
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add Bedrock
-RUN curl -L https://github.com/roots/bedrock/archive/0f8b177d86848d85174c22fae40e69e008946713.tar.gz | tar -xzv --strip=1 && \
+RUN curl -L https://github.com/roots/bedrock/archive/0246c9c64bf8f2143e93b8a8f25d68fa787ea2ff.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
 
 RUN chown -R www-data.www-data /var/www/html/web/app/uploads/
