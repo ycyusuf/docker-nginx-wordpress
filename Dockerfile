@@ -86,13 +86,13 @@ COPY config/nginx.conf /etc/nginx/conf.d/default.conf
 # Configure PHP-FPM
 # https://github.com/TrafeX/docker-php-nginx/blob/6a3b2f4abcd35da533ec191d8cb09eaa31159a85/config/fpm-pool.conf
 COPY config/fpm-pool.conf /usr/local/etc/php-fpm.d/zzz_custom.conf
-COPY config/php.ini /usr/local/etc/php/conf.d/custom.ini
+COPY config/php.ini /usr/local/etc/php/conf.d/zzz_custom.ini
 
 # Configure supervisord
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add Bedrock
-RUN curl -L https://github.com/roots/bedrock/archive/0246c9c64bf8f2143e93b8a8f25d68fa787ea2ff.tar.gz | tar -xzv --strip=1 && \
+RUN curl -L https://github.com/roots/bedrock/archive/cd754b58ef66b5e4adaf52d472c5d1d7138d9f85.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
 
 RUN chown -R www-data.www-data /var/www/html/web/app/uploads/
