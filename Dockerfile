@@ -92,7 +92,7 @@ COPY config/php.ini /usr/local/etc/php/conf.d/zzz_custom.ini
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add Bedrock
-RUN curl -L https://github.com/roots/bedrock/archive/cd754b58ef66b5e4adaf52d472c5d1d7138d9f85.tar.gz | tar -xzv --strip=1 && \
+RUN curl -L https://github.com/roots/bedrock/archive/ffabb7c788588d158ae794277e1b09213ee66696.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
 
 RUN chown -R www-data.www-data /var/www/html/web/app/uploads/
