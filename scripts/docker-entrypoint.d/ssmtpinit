@@ -1,4 +1,8 @@
 #! /bin/bash
+
+# Don't error on unbound variables
+set +u
+
 if [ -n "$SMTP_HOSTNAME" ]; then echo "hostname=${SMTP_HOSTNAME}" > /etc/ssmtp/ssmtp.conf; fi
 if [ -n "$SMTP_ADMIN_EMAIL" ]; then echo "root=${SMTP_ADMIN_EMAIL}" >> /etc/ssmtp/ssmtp.conf; fi
 if [ -n "$SMTP_SERVER" ]; then echo "mailhub=${SMTP_SERVER}" >> /etc/ssmtp/ssmtp.conf; fi
