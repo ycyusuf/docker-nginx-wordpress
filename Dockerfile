@@ -92,7 +92,7 @@ COPY config/php.ini /usr/local/etc/php/conf.d/zzz_custom.ini
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add Bedrock
-RUN curl -L -o wordpress-5.8.tar.gz https://github.com/roots/bedrock/archive/refs/tags/1.16.1.tar.gz && tar --strip=1 -xzvf wordpress-5.8.tar.gz && rm wordpress-5.8.tar.gz && \
+RUN curl -L -o wordpress.tar.gz https://github.com/roots/bedrock/archive/f0dc31cda0e97aa1ac131d14a615c80feff2a12a.tar.gz  && tar --strip=1 -xzvf wordpress.tar.gz && rm wordpress.tar.gz && \
 # RUN curl -L https://github.com/roots/bedrock/archive/1.15.1.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
 
