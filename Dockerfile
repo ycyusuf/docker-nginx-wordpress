@@ -92,8 +92,10 @@ COPY config/php.ini /usr/local/etc/php/conf.d/zzz_custom.ini
 COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add Bedrock
-RUN curl -L -o wordpress.tar.gz https://github.com/roots/bedrock/archive/f0dc31cda0e97aa1ac131d14a615c80feff2a12a.tar.gz  && tar --strip=1 -xzvf wordpress.tar.gz && rm wordpress.tar.gz && \
-# RUN curl -L https://github.com/roots/bedrock/archive/1.15.1.tar.gz | tar -xzv --strip=1 && \
+# Sometime Bedrock don't have a release with the latest WP version and you have to use the dependabot commit
+# RUN curl -L -o wordpress.tar.gz https://github.com/roots/bedrock/archive/f0dc31cda0e97aa1ac131d14a615c80feff2a12a.tar.gz  && tar --strip=1 -xzvf wordpress.tar.gz && rm wordpress.tar.gz && \
+# Use the next one when there's a Bedrock release
+RUN curl -L https://github.com/roots/bedrock/archive/1.17.1.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
 
 RUN chown -R www-data.www-data /var/www/html/web/app/uploads/
