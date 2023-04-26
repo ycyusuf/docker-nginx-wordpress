@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine3.13
+FROM php:8.0-fpm-alpine3.13
 LABEL Maintainer="Ocasta" \
       Description="Nginx PHP7 Wordpress Bedrock"
 
@@ -12,15 +12,16 @@ RUN apk add --no-cache \
 # BusyBox sed is not sufficient for some of our sed expressions
     sed \
 # Ghostscript is required for rendering PDF previews
-    ghostscript
-
+    ghostscript \
+    imagemagick imagemagick-dev \
+    php8-xml \
+  ; \
 # install the PHP extensions we need (https://make.wordpress.org/hosting/handbook/handbook/server-environment/#php-extensions)
 RUN set -ex; \
   \
   apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
     freetype-dev \
-    imagemagick-dev \
     libjpeg-turbo-dev \
     libpng-dev \
     libzip-dev \
@@ -35,9 +36,9 @@ RUN set -ex; \
     opcache \
     zip \
   ; \
-  pecl install imagick-3.4.4; \
-  pecl install ds-1.2.9; \
-  pecl install apfd-1.0.1; \
+  pecl install imagick; \
+  pecl install ds-1.4.0; \
+  pecl install apfd-1.0.3; \
   docker-php-ext-enable apfd ds imagick; \
   \
   runDeps="$( \
@@ -95,7 +96,7 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Sometime Bedrock don't have a release with the latest WP version and you have to use the dependabot commit
 # RUN curl -L -o wordpress.tar.gz https://github.com/roots/bedrock/archive/84133b258efabbcbbd258137fd199fd1f742f3d6.tar.gz  && tar --strip=1 -xzvf wordpress.tar.gz && rm wordpress.tar.gz && \
 # Use the next one when there's a Bedrock release
-RUN curl -L https://github.com/roots/bedrock/archive/refs/tags/1.21.1.tar.gz | tar -xzv --strip=1 && \
+RUN curl -L https://github.com/roots/bedrock/archive/refs/tags/1.22.0.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
 
 RUN chown -R www-data.www-data /var/www/html/web/app/uploads/
