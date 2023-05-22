@@ -96,7 +96,7 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Sometime Bedrock don't have a release with the latest WP version and you have to use the dependabot commit
 # RUN curl -L -o wordpress.tar.gz https://github.com/roots/bedrock/archive/84133b258efabbcbbd258137fd199fd1f742f3d6.tar.gz  && tar --strip=1 -xzvf wordpress.tar.gz && rm wordpress.tar.gz && \
 # Use the next one when there's a Bedrock release
-RUN curl -L https://github.com/roots/bedrock/archive/refs/tags/1.22.0.tar.gz | tar -xzv --strip=1 && \
+RUN curl -L https://github.com/roots/bedrock/archive/refs/tags/1.22.2.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
 
 RUN chown -R www-data.www-data /var/www/html/web/app/uploads/
