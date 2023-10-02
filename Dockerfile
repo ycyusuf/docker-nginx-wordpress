@@ -1,6 +1,6 @@
 FROM php:8.0-fpm-alpine3.13
 LABEL Maintainer="Ocasta" \
-      Description="Nginx PHP7 Wordpress Bedrock"
+      Description="Nginx PHP8 Wordpress Bedrock"
 
 
 # Start with part of Wordpress' Alpine FPM Dockerfile https://github.com/docker-library/wordpress/blob/c63f536e5d24b474c93e6c4b8deeacf95a89eb64/php7.4/fpm-alpine/Dockerfile
@@ -34,14 +34,17 @@ RUN set -ex; \
     gd \
     mysqli \
     opcache \
-    zip \
-  ; \
-  pecl install imagick; \
-  pecl install ds-1.4.0; \
+    zip; 
+# Install imagick
+RUN apk add --no-cache ${PHPIZE_DEPS} imagemagick imagemagick-dev
+RUN pecl install -o -f imagick \
+    &&  docker-php-ext-enable imagick
+RUN apk del --no-cache ${PHPIZE_DEPS}
+# Install ds and apfd
+RUN pecl install ds-1.4.0; \
   pecl install apfd-1.0.3; \
-  docker-php-ext-enable apfd ds imagick; \
-  \
-  runDeps="$( \
+  docker-php-ext-enable apfd ds
+RUN runDeps="$( \
     scanelf --needed --nobanner --format '%n#p' --recursive /usr/local/lib/php/extensions \
       | tr ',' '\n' \
       | sort -u \
