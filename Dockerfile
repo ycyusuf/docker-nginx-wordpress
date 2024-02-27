@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine3.13
+FROM php:8.1-fpm-alpine3.19
 LABEL Maintainer="Ocasta" \
       Description="Nginx PHP8 Wordpress Bedrock"
 
