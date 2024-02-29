@@ -1,21 +1,8 @@
 FROM php:8.1-fpm-alpine3.19
 LABEL Maintainer="Ocasta" \
-      Description="Nginx PHP8 Wordpress Bedrock"
+      Description="Nginx PHP8.1 Wordpress Bedrock"
 
 
-# Start with part of Wordpress' Alpine FPM Dockerfile https://github.com/docker-library/wordpress/blob/c63f536e5d24b474c93e6c4b8deeacf95a89eb64/php7.4/fpm-alpine/Dockerfile
-
-# persistent dependencies
-RUN apk add --no-cache \
-# in theory, docker-entrypoint.sh is POSIX-compliant, but priority is a working, consistent image
-    bash \
-# BusyBox sed is not sufficient for some of our sed expressions
-    sed \
-# Ghostscript is required for rendering PDF previews
-    ghostscript \
-    imagemagick imagemagick-dev \
-    php8-xml \
-  ; \
 # install the PHP extensions we need (https://make.wordpress.org/hosting/handbook/handbook/server-environment/#php-extensions)
 RUN set -ex; \
   \
@@ -36,7 +23,7 @@ RUN set -ex; \
     opcache \
     zip; 
 # Install imagick
-RUN apk add --no-cache ${PHPIZE_DEPS} imagemagick imagemagick-dev
+RUN apk add --no-cache ${PHPIZE_DEPS} bash sed ghostscript php81-xml imagemagick imagemagick-dev
 RUN pecl install -o -f imagick \
     &&  docker-php-ext-enable imagick
 RUN apk del --no-cache ${PHPIZE_DEPS}
