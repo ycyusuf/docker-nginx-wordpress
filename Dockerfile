@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-alpine3.19
+FROM php:8.1-fpm-alpine
 LABEL Maintainer="Ocasta" \
       Description="Nginx PHP8.1 Wordpress Bedrock"
 
@@ -86,8 +86,18 @@ COPY config/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Sometime Bedrock don't have a release with the latest WP version and you have to use the dependabot commit
 # RUN curl -L -o wordpress.tar.gz https://github.com/roots/bedrock/archive/84133b258efabbcbbd258137fd199fd1f742f3d6.tar.gz  && tar --strip=1 -xzvf wordpress.tar.gz && rm wordpress.tar.gz && \
 # Use the next one when there's a Bedrock release
-RUN curl -L https://github.com/roots/bedrock/archive/refs/tags/1.23.2.tar.gz | tar -xzv --strip=1 && \
+RUN curl -L https://github.com/roots/bedrock/archive/refs/tags/1.23.3.tar.gz | tar -xzv --strip=1 && \
     composer install --no-dev
+
+COPY scripts/install-language.sh /usr/local/bin/install-language.sh
+RUN /usr/local/bin/install-language.sh es_ES fr_FR
+
+# Annoying hack for arabic as there is only a 6.1.1 version
+# Check https://make.wordpress.org/polyglots/teams/?locale=ar for updates
+RUN cd /var/www/html/web/app/languages && \
+    curl https://downloads.wordpress.org/translation/core/6.1.1/ar.zip -O && \
+    unzip ar.zip && \
+    rm ar.zip
 
 RUN chown -R www-data.www-data /var/www/html/web/app/uploads/
 
