@@ -73,6 +73,7 @@ RUN apk --no-cache add ssmtp nginx supervisor composer
 
 # Configure nginx
 COPY config/nginx.conf /etc/nginx/http.d/default.conf
+COPY config/nginx_headers.conf /etc/nginx/headers.conf
 
 # Configure PHP-FPM
 # https://github.com/TrafeX/docker-php-nginx/blob/6a3b2f4abcd35da533ec191d8cb09eaa31159a85/config/fpm-pool.conf
